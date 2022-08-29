@@ -1,9 +1,13 @@
 package application;
 
 import models.Post;
+import models.User;
+import panels.ImagePanel;
+import panels.LoginPanel;
 import panels.PostWritePanel;
 import panels.postsPanel;
 import utils.PostLoader;
+import utils.UserLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,9 +19,12 @@ import java.util.List;
 
 public class SecondHandMarket {
     private List<Post> posts;
+    private List<User> users;
 
     private JFrame frame;
     private JPanel contentPanel;
+    private JPanel loginPanel;
+    private ImagePanel imagePanel;
 
     public static void main(String[] args) throws FileNotFoundException {
         SecondHandMarket application = new SecondHandMarket();
@@ -27,6 +34,9 @@ public class SecondHandMarket {
     public SecondHandMarket() throws FileNotFoundException {
         PostLoader postLoader = new PostLoader();
         posts = postLoader.loadPost();
+
+        UserLoader userLoader = new UserLoader();
+        users = userLoader.loadUser();
     }
 
     public void run() {
@@ -40,19 +50,26 @@ public class SecondHandMarket {
     }
 
     public void initFrame() {
-        frame = new JFrame("중고 마켓");
+        frame = new JFrame("우리 마켓");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 700);
         frame.setLocation(200, 100);
+
+        imagePanel = new ImagePanel("data/background2.png");
+        imagePanel.setLayout(new BorderLayout());
+        frame.add(imagePanel);
+        frame.setVisible(true);
     }
 
     public void initMenu() {
         JPanel panel = new JPanel();
+        panel.setOpaque(false);
 
         panel.add(createHomeButton());
         panel.add(createAddPostButton());
+        panel.add(createLogoutButton());
 
-        frame.add(panel, BorderLayout.PAGE_START);
+        imagePanel.add(panel, BorderLayout.PAGE_START);
     }
 
     private JButton createHomeButton() {
@@ -79,10 +96,26 @@ public class SecondHandMarket {
         return button;
     }
 
+    private JButton createLogoutButton() {
+        JButton button = new JButton("로그아웃");
+        button.setPreferredSize(new Dimension(130, 45));
+        button.addActionListener(e -> {
+            loginPanel = new LoginPanel(users);
+
+            showContentPanel(loginPanel);
+        });
+
+        return button;
+    }
+
     private void initContentPanel() {
         contentPanel = new JPanel();
+        contentPanel.setOpaque(false);
 
-        frame.add(contentPanel);
+        loginPanel = new LoginPanel(users);
+        showContentPanel(loginPanel);
+
+        imagePanel.add(contentPanel);
     }
 
     private void showContentPanel(JPanel panel) {

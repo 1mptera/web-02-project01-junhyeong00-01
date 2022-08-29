@@ -9,16 +9,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PostLoaderTest {
-//    @Test
-//    void loadPost() throws FileNotFoundException {
-//        PostLoader postLoader = new PostLoader();
-//
-//        List<Post> posts = postLoader.loadPost();
-//
-//        assertNotNull(posts);
-//
-//        assertEquals(new Post("제목", "내용"), posts.get(0));
-//    }
+    @Test
+    void loadPost() throws FileNotFoundException {
+        PostLoader postLoader = new PostLoader();
+
+        List<Post> posts = postLoader.loadPost();
+
+        assertNotNull(posts);
+    }
 
     @Test
     void parsePost() {
