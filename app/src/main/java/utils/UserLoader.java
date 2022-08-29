@@ -1,6 +1,5 @@
 package utils;
 
-import models.Post;
 import models.User;
 
 import java.io.File;
@@ -11,13 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class PostLoader {
+public class UserLoader {
+
     private Scanner scanner;
 
-    public List<Post> loadPost() throws FileNotFoundException {
-        List<Post> posts = new ArrayList<>();
+    public List<User> loadUser() throws FileNotFoundException {
+        List<User> posts = new ArrayList<>();
 
-        File file = new File("data/postsData.csv");
+        File file = new File("data/usersData.csv");
 
         try {
             scanner = new Scanner(file);
@@ -28,24 +28,24 @@ public class PostLoader {
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
 
-            Post post = parsePost(line);
-            posts.add(post);
+            User user = parseUser(line);
+            posts.add(user);
         }
 
         return posts;
     }
 
-    public Post parsePost(String text) {
+    public User parseUser(String text) {
         String[] words = text.split(",");
 
-        return new Post(words[0], words[1]);
+        return new User(words[0], words[1], words[2]);
     }
 
-    public void savePosts(List<Post> posts) throws IOException {
-        FileWriter fileWriter = new FileWriter("postsData.csv");
+    public void saveUsers(List<User> users) throws IOException {
+        FileWriter fileWriter = new FileWriter("usersData.csv");
 
-        for (Post post : posts) {
-            String line = post.toCsvRow();
+        for (User user : users) {
+            String line = user.toCsvRow();
             fileWriter.write(line + "\n");
         }
         fileWriter.close();

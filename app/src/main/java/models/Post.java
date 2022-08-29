@@ -21,6 +21,7 @@ public class Post {
         return title + "," + content;
     }
 
+    @Override
     public String toString() {
         return title + " - " + content;
     }

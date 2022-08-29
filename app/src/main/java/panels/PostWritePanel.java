@@ -66,7 +66,7 @@ public class PostWritePanel extends JPanel {
 
             PostLoader postLoader = new PostLoader();
             try {
-                postLoader.savePost(posts);
+                postLoader.savePosts(posts);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
