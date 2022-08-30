@@ -1,6 +1,7 @@
 package panels;
 
 import frames.SignUpFrame;
+import models.Seller;
 import models.User;
 
 import javax.swing.JButton;
@@ -9,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.List;
 
@@ -18,13 +20,17 @@ public class LoginPanel extends JPanel {
     private JTextField userNameInputField;
     private JTextField passwordInputField;
     private List<User> users;
+    private Seller seller;
 
-    public LoginPanel(List<User> users) {
+    public LoginPanel(List<User> users, Seller seller) {
         this.users = users;
+        this.seller = seller;
+
         setOpaque(false);
 
         loginPanel = new JPanel();
         loginPanel.setLayout(new GridLayout(7, 1));
+        loginPanel.setBackground(new Color(255, 255, 255, 190));
 
         loginPanel.add(LoginTitleLabel());
         loginPanel.add(userNameLabel());
@@ -81,6 +87,7 @@ public class LoginPanel extends JPanel {
             if (!(userName.length() == 0) && !(password.length() == 0)) {
                 for (User user : users) {
                     if (userName.equals(user.userName()) && password.equals(user.password())) {
+                        seller.login( user.id(), user.nickname());
                         this.removeAll();
                         this.add(new JLabel("환영합니다. " + user.nickname() + "님"));
 

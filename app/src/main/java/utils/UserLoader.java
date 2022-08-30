@@ -38,11 +38,12 @@ public class UserLoader {
     public User parseUser(String text) {
         String[] words = text.split(",");
 
-        return new User(words[0], words[1], words[2]);
+        long id = Long.parseLong(words[0]);
+        return new User(words[1], words[2], words[3], id);
     }
 
     public void saveUsers(List<User> users) throws IOException {
-        FileWriter fileWriter = new FileWriter("usersData.csv");
+        FileWriter fileWriter = new FileWriter("data/usersData.csv");
 
         for (User user : users) {
             String line = user.toCsvRow();

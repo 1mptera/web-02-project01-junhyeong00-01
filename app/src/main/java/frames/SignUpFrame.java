@@ -90,8 +90,10 @@ public class SignUpFrame extends JFrame {
             if (!(userName.length() == 0)
                     && !(password.length() == 0)
                     && !(nickname.length() == 0)) {
-            User user = new User(userName, password, nickname);
-            users.add(user);
+                long id = users.size() + 1;
+
+                User user = new User(userName, password, nickname, id);
+                users.add(user);
 
                 UserLoader userLoader = new UserLoader();
                 try {
