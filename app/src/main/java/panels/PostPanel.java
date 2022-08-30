@@ -1,7 +1,8 @@
 package panels;
 
-import frames.postsFrame;
+import frames.postFrame;
 import models.Post;
+import models.Seller;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,10 +17,12 @@ import java.util.List;
 public class PostPanel extends JPanel {
     private Post post;
     private List<Post> posts;
+    private Seller seller;
 
-    public PostPanel(Post post, List<Post> posts) {
+    public PostPanel(Post post, List<Post> posts, Seller seller) {
         this.post = post;
         this.posts = posts;
+        this.seller = seller;
 
         setBorder(new LineBorder(Color.GRAY, 1, true));
         setPreferredSize(new Dimension(350, 50));
@@ -27,7 +30,7 @@ public class PostPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JFrame postFrame = new postsFrame(post);
+                JFrame postFrame = new postFrame(post, seller, posts);
             }
         });
 
@@ -39,7 +42,7 @@ public class PostPanel extends JPanel {
         label.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JFrame postFrame = new postsFrame(post);
+                JFrame postFrame = new postFrame(post, seller, posts);
             }
         });
         return label;
