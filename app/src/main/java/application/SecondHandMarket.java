@@ -1,6 +1,7 @@
 package application;
 
 import models.Post;
+import models.Seller;
 import models.User;
 import panels.ImagePanel;
 import panels.LoginPanel;
@@ -25,6 +26,7 @@ public class SecondHandMarket {
     private JPanel contentPanel;
     private JPanel loginPanel;
     private ImagePanel imagePanel;
+    private Seller seller = new Seller(-1, "");
 
     public static void main(String[] args) throws FileNotFoundException {
         SecondHandMarket application = new SecondHandMarket();
@@ -88,7 +90,7 @@ public class SecondHandMarket {
         JButton button = new JButton("판매 글 등록");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            JPanel postWritePanel = new PostWritePanel(posts);
+            JPanel postWritePanel = new PostWritePanel(posts, seller);
 
             showContentPanel(postWritePanel);
         });
@@ -100,7 +102,8 @@ public class SecondHandMarket {
         JButton button = new JButton("로그아웃");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            loginPanel = new LoginPanel(users);
+            seller.logout();
+            loginPanel = new LoginPanel(users, seller);
 
             showContentPanel(loginPanel);
         });
@@ -112,7 +115,7 @@ public class SecondHandMarket {
         contentPanel = new JPanel();
         contentPanel.setOpaque(false);
 
-        loginPanel = new LoginPanel(users);
+        loginPanel = new LoginPanel(users, seller);
         showContentPanel(loginPanel);
 
         imagePanel.add(contentPanel);

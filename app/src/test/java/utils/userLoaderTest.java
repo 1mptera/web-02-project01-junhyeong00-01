@@ -23,8 +23,8 @@ class userLoaderTest {
     void parseUser() {
         UserLoader userLoader = new UserLoader();
 
-        User user = userLoader.parseUser("아이디,비번,토끼");
+        User user = userLoader.parseUser("1,아이디,비번,토끼");
 
-        assertEquals("id: 아이디, password: 비번, nickname: 토끼", user.toString());
+        assertEquals("userName: 아이디, password: 비번, nickname: 토끼", user.toString());
     }
 }

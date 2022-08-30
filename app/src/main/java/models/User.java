@@ -1,14 +1,16 @@
 package models;
 
-public class User {
+public class User extends Account{
     private String userName;
     private String password;
     private String nickname;
+    private long id;
 
-    public User(String userName, String password, String nickname) {
+    public User(String userName, String password, String nickname, long id) {
         this.userName = userName;
         this.password = password;
         this.nickname = nickname;
+        this.id = id;
     }
 
     public String userName() {
@@ -21,7 +23,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "id: " + userName
+        return "userName: " + userName
                 + ", password: " + password
                 + ", nickname: " + nickname;
     }
@@ -31,6 +33,10 @@ public class User {
     }
 
     public String toCsvRow() {
-        return userName + "," + password + "," + nickname;
+        return id + "," + userName + "," + password + "," + nickname;
+    }
+
+    public long id() {
+        return id;
     }
 }

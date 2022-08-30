@@ -38,11 +38,13 @@ public class PostLoader {
     public Post parsePost(String text) {
         String[] words = text.split(",");
 
-        return new Post(words[0], words[1]);
+        long id = Long.parseLong(words[0]);
+        long sellerId = Long.parseLong(words[4]);
+        return new Post(id, words[1], words[2], words[3], sellerId, words[5]);
     }
 
     public void savePosts(List<Post> posts) throws IOException {
-        FileWriter fileWriter = new FileWriter("postsData.csv");
+        FileWriter fileWriter = new FileWriter("data/postsData.csv");
 
         for (Post post : posts) {
             String line = post.toCsvRow();
