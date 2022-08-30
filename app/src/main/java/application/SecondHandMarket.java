@@ -27,6 +27,7 @@ public class SecondHandMarket {
     private JPanel loginPanel;
     private ImagePanel imagePanel;
     private Seller seller = new Seller(-1, "");
+    private JPanel menuPanel;
 
     public static void main(String[] args) throws FileNotFoundException {
         SecondHandMarket application = new SecondHandMarket();
@@ -64,41 +65,45 @@ public class SecondHandMarket {
     }
 
     public void initMenu() {
-        JPanel panel = new JPanel();
-        panel.setOpaque(false);
+        menuPanel = new JPanel();
+        menuPanel.setOpaque(false);
 
-        panel.add(createHomeButton());
-        panel.add(createAddPostButton());
-        panel.add(createLogoutButton());
+        menuPanel.add(homeButton());
+        menuPanel.add(addPostButton());
+        menuPanel.add(logoutButton());
 
-        imagePanel.add(panel, BorderLayout.PAGE_START);
+        imagePanel.add(menuPanel, BorderLayout.PAGE_START);
     }
 
-    private JButton createHomeButton() {
+    private JButton homeButton() {
         JButton button = new JButton("홈");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            JPanel postPanel = new postsPanel(posts);
+            if (seller.userId() != -1) {
+                JPanel postPanel = new postsPanel(posts, seller);
 
-            showContentPanel(postPanel);
+                showContentPanel(postPanel);
+            }
         });
 
         return button;
     }
 
-    private JButton createAddPostButton() {
+    private JButton addPostButton() {
         JButton button = new JButton("판매 글 등록");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            JPanel postWritePanel = new PostWritePanel(posts, seller);
+            if (seller.userId() != -1) {
+                JPanel postWritePanel = new PostWritePanel(posts, seller);
 
-            showContentPanel(postWritePanel);
+                showContentPanel(postWritePanel);
+            }
         });
 
         return button;
     }
 
-    private JButton createLogoutButton() {
+    private JButton logoutButton() {
         JButton button = new JButton("로그아웃");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {

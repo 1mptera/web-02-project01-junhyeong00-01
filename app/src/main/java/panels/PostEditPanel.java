@@ -15,17 +15,19 @@ import java.awt.GridLayout;
 import java.io.IOException;
 import java.util.List;
 
-public class PostWritePanel extends JPanel {
-    private final JComboBox comboBox;
+public class PostEditPanel extends JPanel {
+    private final Post post;
+    private final Seller seller;
     private List<Post> posts;
-    private Seller seller;
-
+    private final JComboBox comboBox;
     private JTextField postTitleInputField;
     private JTextArea postContentInputTextArea;
 
-    public PostWritePanel(List<Post> posts, Seller seller) {
-        this.posts = posts;
+    public PostEditPanel(Post post, Seller seller, List<Post> posts) {
+        this.post = post;
         this.seller = seller;
+        this.posts = posts;
+
         setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();
@@ -60,6 +62,7 @@ public class PostWritePanel extends JPanel {
 
     private JTextField postTitleInputField() {
         postTitleInputField = new JTextField(20);
+        postTitleInputField.setText(post.title());
         return postTitleInputField;
     }
 
@@ -70,21 +73,18 @@ public class PostWritePanel extends JPanel {
     private JTextArea postContentInputTextArea() {
         postContentInputTextArea = new JTextArea(20, 25);
         postContentInputTextArea.setLineWrap(true);
+        postContentInputTextArea.setText(post.content());
         return postContentInputTextArea;
     }
 
     private JButton postButton() {
-        JButton button = new JButton("등록하기");
+        JButton button = new JButton("저장");
         button.addActionListener(e -> {
             String postTitle = postTitleInputField.getText();
             String postContent = postContentInputTextArea.getText();
-            String sellerName = seller.userName();
             String category = String.valueOf(comboBox.getSelectedItem());
-            long id = posts.size() + 1;
-            long sellerId = seller.userId();
 
-            Post post = new Post(id, postTitle, postContent, sellerName, sellerId, category, false);
-            posts.add(post);
+            seller.edit(post, postTitle, postContent, category);
 
             PostLoader postLoader = new PostLoader();
             try {

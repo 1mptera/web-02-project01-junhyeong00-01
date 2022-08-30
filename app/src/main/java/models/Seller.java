@@ -27,4 +27,8 @@ public class Seller {
         this.userId = -1;
         this.userNickname = "손님모드";
     }
+
+    public void edit(Post post, String postTitle, String postContent, String category) {
+        post.change(postTitle, postContent, category);
+    }
 }

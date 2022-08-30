@@ -40,6 +40,7 @@ public class LoginPanel extends JPanel {
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 2));
+        panel.setOpaque(false);
         panel.add(loginButton());
         panel.add(signUpButton());
 

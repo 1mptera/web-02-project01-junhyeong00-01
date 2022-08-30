@@ -22,7 +22,7 @@ class PostLoaderTest {
     void parsePost() {
         PostLoader postLoader = new PostLoader();
 
-        Post post = postLoader.parsePost("1,제목,내용,토끼,1,디지털기기");
+        Post post = postLoader.parsePost("1,제목,내용,토끼,1,디지털기기,false");
 
         assertEquals("제목 - 내용", post.toString());
     }

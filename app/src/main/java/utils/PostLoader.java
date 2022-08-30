@@ -1,7 +1,6 @@
 package utils;
 
 import models.Post;
-import models.User;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -40,7 +39,8 @@ public class PostLoader {
 
         long id = Long.parseLong(words[0]);
         long sellerId = Long.parseLong(words[4]);
-        return new Post(id, words[1], words[2], words[3], sellerId, words[5]);
+        boolean deleted = Boolean.parseBoolean(words[6]);
+        return new Post(id, words[1], words[2], words[3], sellerId, words[5], deleted);
     }
 
     public void savePosts(List<Post> posts) throws IOException {
