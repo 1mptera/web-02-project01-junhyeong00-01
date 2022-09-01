@@ -1,6 +1,7 @@
 package panels;
 
 import models.Post;
+import models.SecondHandItem;
 import models.Seller;
 import utils.PostLoader;
 
@@ -22,6 +23,7 @@ public class PostEditPanel extends JPanel {
     private final JComboBox comboBox;
     private JTextField postTitleInputField;
     private JTextArea postContentInputTextArea;
+    private JTextField priceInputField;
 
     public PostEditPanel(Post post, Seller seller, List<Post> posts) {
         this.post = post;
@@ -37,11 +39,10 @@ public class PostEditPanel extends JPanel {
         panel.add(postTitleInputField());
 
         panel.add(new JLabel("- 카테고리 선택"));
-        String[] words = {"디지털기기", "생활가전", "가구", "주방", "의류", "게임", "도서", "스포츠", "기타"};
-        comboBox = new JComboBox(words);
+        comboBox = new JComboBox(SecondHandItem.CATEGORY);
         panel.add(comboBox);
-        panel.add(new JLabel("- 가격"));
-        panel.add(new JTextField(20));
+        panel.add(priceLabel());
+        panel.add(priceInputField());
 
         panel.add(postContentLabel());
 
@@ -66,6 +67,15 @@ public class PostEditPanel extends JPanel {
         return postTitleInputField;
     }
 
+    private JLabel priceLabel() {
+        return new JLabel("- 가격");
+    }
+
+    private JTextField priceInputField() {
+        priceInputField = new JTextField(20);
+        return priceInputField;
+    }
+
     private JLabel postContentLabel() {
         return new JLabel("- 내용:");
     }
@@ -83,8 +93,9 @@ public class PostEditPanel extends JPanel {
             String postTitle = postTitleInputField.getText();
             String postContent = postContentInputTextArea.getText();
             String category = String.valueOf(comboBox.getSelectedItem());
+            long secondHandItemPrice = Long.parseLong(priceInputField.getText());
 
-            seller.edit(post, postTitle, postContent, category);
+            seller.edit(post, postTitle, postContent, category, secondHandItemPrice);
 
             PostLoader postLoader = new PostLoader();
             try {

@@ -6,6 +6,7 @@ import models.User;
 import panels.ImagePanel;
 import panels.LoginPanel;
 import panels.PostWritePanel;
+import panels.SearchPanel;
 import panels.postsPanel;
 import utils.PostLoader;
 import utils.UserLoader;
@@ -14,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -69,7 +71,8 @@ public class SecondHandMarket {
         menuPanel.setOpaque(false);
 
         menuPanel.add(homeButton());
-        menuPanel.add(addPostButton());
+        menuPanel.add(searchButton());
+        menuPanel.add(postWriteButton());
         menuPanel.add(logoutButton());
 
         imagePanel.add(menuPanel, BorderLayout.PAGE_START);
@@ -85,11 +88,23 @@ public class SecondHandMarket {
                 showContentPanel(postPanel);
             }
         });
-
         return button;
     }
 
-    private JButton addPostButton() {
+    private JButton searchButton() {
+        JButton button = new JButton("검색");
+        button.setPreferredSize(new Dimension(130, 45));
+        button.addActionListener(e -> {
+            if (seller.userId() != -1) {
+                JPanel searchPanel = new SearchPanel(posts, seller);
+
+                showContentPanel(searchPanel);
+            }
+        });
+        return button;
+    }
+
+    private JButton postWriteButton() {
         JButton button = new JButton("판매 글 등록");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
@@ -99,7 +114,6 @@ public class SecondHandMarket {
                 showContentPanel(postWritePanel);
             }
         });
-
         return button;
     }
 
@@ -112,7 +126,6 @@ public class SecondHandMarket {
 
             showContentPanel(loginPanel);
         });
-
         return button;
     }
 

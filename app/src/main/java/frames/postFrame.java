@@ -19,6 +19,7 @@ public class postFrame extends JFrame {
     private Post post;
     private Seller seller;
     private List<Post> posts;
+    private JPanel editPanel;
 
     public postFrame(Post post, Seller seller, List<Post> posts) {
         this.post = post;
@@ -37,7 +38,7 @@ public class postFrame extends JFrame {
 
         postPanel.add(new JLabel("작성자: " + post.sellerNickname()));
         postPanel.add(new JLabel("카테고리: " + post.category()));
-        postPanel.add(new JLabel("가격: "));
+        postPanel.add(new JLabel("가격: " + post.secondHandItemPrice() + "원"));
         postPanel.add(new JLabel(""));
 
         JPanel panel1 = new JPanel();
@@ -48,24 +49,25 @@ public class postFrame extends JFrame {
     }
 
     private JPanel editPanel() {
-        JPanel panel = new JPanel();
+        editPanel = new JPanel();
         if (seller.userId() == post.sellerId()) {
-            panel.add(editButton());
-            panel.add(deleteButton());
+            editPanel.add(editButton());
+            editPanel.add(deleteButton());
         }
-        return panel;
+        return editPanel;
     }
 
     private JButton editButton() {
         JButton button = new JButton("편집");
         button.addActionListener(e -> {
-           JPanel postEditPanel = new PostEditPanel(post, seller, posts);
+            JPanel postEditPanel = new PostEditPanel(post, seller, posts);
 
-           postPanel.removeAll();
-           postPanel.add(postEditPanel);
+            editPanel.removeAll();
+            postPanel.removeAll();
+            postPanel.add(postEditPanel);
 
-           postPanel.setVisible(false);
-           postPanel.setVisible(true);
+            postPanel.setVisible(false);
+            postPanel.setVisible(true);
         });
         return button;
     }
