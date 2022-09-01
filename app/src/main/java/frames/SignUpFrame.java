@@ -13,8 +13,9 @@ import java.io.IOException;
 import java.util.List;
 
 public class SignUpFrame extends JFrame {
+    private final List<User> users;
+
     private final JPanel signUpPanel;
-    private List<User> users;
     private JTextField userNameInputField;
     private JTextField passwordInputField;
     private JTextField nicknameInputField;

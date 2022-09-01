@@ -3,6 +3,7 @@ package panels;
 import models.Post;
 import models.SecondHandItem;
 import models.Seller;
+import models.Transaction;
 import utils.PostLoader;
 
 import javax.swing.JButton;
@@ -12,15 +13,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.util.List;
 
 public class PostWritePanel extends JPanel {
-    private final JComboBox comboBox;
-    private List<Post> posts;
+    private final List<Post> posts;
+
     private Seller seller;
 
+    private JComboBox comboBox;
     private JTextField postTitleInputField;
     private JTextArea postContentInputTextArea;
     private JTextField priceInputField;
@@ -28,6 +31,7 @@ public class PostWritePanel extends JPanel {
     public PostWritePanel(List<Post> posts, Seller seller) {
         this.posts = posts;
         this.seller = seller;
+
         setLayout(new BorderLayout());
 
         JPanel panel = new JPanel();
@@ -35,24 +39,37 @@ public class PostWritePanel extends JPanel {
 
         panel.add(postTitleLabel());
         panel.add(postTitleInputField());
-
-        panel.add(new JLabel("- 카테고리 선택"));
-        comboBox = new JComboBox(SecondHandItem.CATEGORY);
-        panel.add(comboBox);
+        panel.add(categoryLabel());
+        panel.add(categoryComboBox());
         panel.add(priceLabel());
         panel.add(priceInputField());
-
         panel.add(postContentLabel());
 
-        JPanel panel1 = new JPanel();
-        panel1.add(postContentInputTextArea());
-        add(panel1);
-
-        JPanel panel2 = new JPanel();
-        panel2.add(postButton());
-        add(panel2, BorderLayout.SOUTH);
+        add(postContentPanel());
+        add(postButtonPanel(), BorderLayout.SOUTH);
 
         add(panel, BorderLayout.NORTH);
+    }
+
+    private JComboBox categoryComboBox() {
+        comboBox = new JComboBox(SecondHandItem.CATEGORY);
+        return comboBox;
+    }
+
+    private JPanel postButtonPanel() {
+        JPanel panel = new JPanel();
+        panel.add(postButton());
+        return panel;
+    }
+
+    private JPanel postContentPanel() {
+        JPanel panel = new JPanel();
+        panel.add(postContentInputTextArea());
+        return panel;
+    }
+
+    private JLabel categoryLabel() {
+        return new JLabel("- 카테고리 선택");
     }
 
     private JLabel postTitleLabel() {
@@ -88,24 +105,35 @@ public class PostWritePanel extends JPanel {
         button.addActionListener(e -> {
             String postTitle = postTitleInputField.getText();
             String postContent = postContentInputTextArea.getText();
-            String sellerName = seller.userName();
+            String sellerName = seller.nickname();
             String category = String.valueOf(comboBox.getSelectedItem());
             long id = posts.size() + 1;
-            long sellerId = seller.userId();
+            long sellerId = seller.id();
             long price = Long.parseLong(priceInputField.getText());
 
-            SecondHandItem secondHandItem = new SecondHandItem(price, category);
-            Post post = new Post(id, postTitle, postContent,
-                    sellerName, sellerId, secondHandItem.category(), secondHandItem.price(), false);
-            posts.add(post);
+            if (!category.equals(SecondHandItem.CATEGORY[0])) {
+                SecondHandItem secondHandItem = new SecondHandItem(price, category);
+                Post post = new Post(id, postTitle, postContent,
+                        sellerName, sellerId, secondHandItem.category(), secondHandItem.price(), Transaction.FOR_SALE, false);
+                posts.add(post);
 
-            PostLoader postLoader = new PostLoader();
-            try {
-                postLoader.savePosts(posts);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                savePosts();
+
+                removeAll();
             }
+
+            setVisible(false);
+            setVisible(true);
         });
         return button;
+    }
+
+    private void savePosts() {
+        PostLoader postLoader = new PostLoader();
+        try {
+            postLoader.savePosts(posts);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

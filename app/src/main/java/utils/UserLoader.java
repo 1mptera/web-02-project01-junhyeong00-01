@@ -14,7 +14,7 @@ public class UserLoader {
 
     private Scanner scanner;
 
-    public List<User> loadUser() throws FileNotFoundException {
+    public List<User> loadUsers() throws FileNotFoundException {
         List<User> posts = new ArrayList<>();
 
         File file = new File("data/usersData.csv");

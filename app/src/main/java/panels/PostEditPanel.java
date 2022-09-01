@@ -17,10 +17,12 @@ import java.io.IOException;
 import java.util.List;
 
 public class PostEditPanel extends JPanel {
+    private final List<Post> posts;
+    
     private final Post post;
     private final Seller seller;
-    private List<Post> posts;
-    private final JComboBox comboBox;
+    
+    private JComboBox comboBox;
     private JTextField postTitleInputField;
     private JTextArea postContentInputTextArea;
     private JTextField priceInputField;
@@ -38,23 +40,38 @@ public class PostEditPanel extends JPanel {
         panel.add(postTitleLabel());
         panel.add(postTitleInputField());
 
-        panel.add(new JLabel("- 카테고리 선택"));
-        comboBox = new JComboBox(SecondHandItem.CATEGORY);
-        panel.add(comboBox);
+        panel.add(categoryLabel());
+        panel.add(categoryComboBox());
         panel.add(priceLabel());
         panel.add(priceInputField());
-
         panel.add(postContentLabel());
-
-        JPanel panel1 = new JPanel();
-        panel1.add(postContentInputTextArea());
-        add(panel1);
-
-        JPanel panel2 = new JPanel();
-        panel2.add(postButton());
-        add(panel2, BorderLayout.SOUTH);
+        
+        add(postContentPanel());
+        
+        add(postButtonPanel(), BorderLayout.SOUTH);
 
         add(panel, BorderLayout.NORTH);
+    }
+
+    private JComboBox categoryComboBox() {
+        comboBox = new JComboBox(SecondHandItem.CATEGORY);
+        return comboBox;
+    }
+
+    private JPanel postContentPanel() {
+        JPanel panel = new JPanel();
+        panel.add(postContentInputTextArea());
+        return panel;
+    }
+
+    private JPanel postButtonPanel() {
+        JPanel panel = new JPanel();
+        panel.add(postButton());
+        return panel;
+    }
+
+    private JLabel categoryLabel() {
+        return new JLabel("- 카테고리 선택");
     }
 
     private JLabel postTitleLabel() {
@@ -73,6 +90,7 @@ public class PostEditPanel extends JPanel {
 
     private JTextField priceInputField() {
         priceInputField = new JTextField(20);
+        priceInputField.setText(String.valueOf(post.secondHandItemPrice()));
         return priceInputField;
     }
 
@@ -97,13 +115,17 @@ public class PostEditPanel extends JPanel {
 
             seller.edit(post, postTitle, postContent, category, secondHandItemPrice);
 
-            PostLoader postLoader = new PostLoader();
-            try {
-                postLoader.savePosts(posts);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            savePosts();
         });
         return button;
+    }
+
+    private void savePosts() {
+        PostLoader postLoader = new PostLoader();
+        try {
+            postLoader.savePosts(posts);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

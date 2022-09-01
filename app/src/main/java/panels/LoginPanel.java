@@ -1,6 +1,7 @@
 package panels;
 
 import frames.SignUpFrame;
+import models.Buyer;
 import models.Seller;
 import models.User;
 
@@ -15,19 +16,26 @@ import java.awt.GridLayout;
 import java.util.List;
 
 public class LoginPanel extends JPanel {
+    private final List<User> users;
 
-    private final JPanel loginPanel;
+    private Seller seller;
+    private Buyer buyer;
+
+    private JPanel loginPanel;
     private JTextField userNameInputField;
     private JTextField passwordInputField;
-    private List<User> users;
-    private Seller seller;
 
-    public LoginPanel(List<User> users, Seller seller) {
+    public LoginPanel(List<User> users, Seller seller, Buyer buyer) {
         this.users = users;
         this.seller = seller;
+        this.buyer = buyer;
 
         setOpaque(false);
 
+        add(loginPanel());
+    }
+
+    private JPanel loginPanel() {
         loginPanel = new JPanel();
         loginPanel.setLayout(new GridLayout(7, 1));
         loginPanel.setBackground(new Color(255, 255, 255, 190));
@@ -38,15 +46,18 @@ public class LoginPanel extends JPanel {
         loginPanel.add(passwordLabel());
         loginPanel.add(passwordInputField());
 
+        loginPanel.add(buttonPanel());
+
+        return loginPanel;
+    }
+
+    private JPanel buttonPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(1, 2));
         panel.setOpaque(false);
         panel.add(loginButton());
         panel.add(signUpButton());
-
-        loginPanel.add(panel);
-
-        add(loginPanel);
+        return panel;
     }
 
     private JLabel LoginTitleLabel() {
@@ -89,6 +100,7 @@ public class LoginPanel extends JPanel {
                 for (User user : users) {
                     if (userName.equals(user.userName()) && password.equals(user.password())) {
                         seller.login( user.id(), user.nickname());
+                        buyer.login( user.id(), user.nickname());
                         this.removeAll();
                         this.add(new JLabel("환영합니다. " + user.nickname() + "님"));
 

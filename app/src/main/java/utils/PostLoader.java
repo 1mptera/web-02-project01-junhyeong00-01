@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class PostLoader {
     private Scanner scanner;
 
-    public List<Post> loadPost() throws FileNotFoundException {
+    public List<Post> loadPosts() throws FileNotFoundException {
         List<Post> posts = new ArrayList<>();
 
         File file = new File("data/postsData.csv");
@@ -40,8 +40,8 @@ public class PostLoader {
         long id = Long.parseLong(words[0]);
         long sellerId = Long.parseLong(words[4]);
         long  secondHandItemPrice = Long.parseLong(words[6]);
-        boolean deleted = Boolean.parseBoolean(words[7]);
-        return new Post(id, words[1], words[2], words[3], sellerId, words[5], secondHandItemPrice, deleted);
+        boolean deleted = Boolean.parseBoolean(words[8]);
+        return new Post(id, words[1], words[2], words[3], sellerId, words[5], secondHandItemPrice,words[7], deleted);
     }
 
     public void savePosts(List<Post> posts) throws IOException {

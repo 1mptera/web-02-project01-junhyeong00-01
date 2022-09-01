@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PostTest {
     @Test
     void creation() {
-        Post post = new Post(1,"제목", "내용", "토끼", 1, "디지털기기", 2000, false);
+        Post post = new Post(1, "제목", "내용", "토끼", 1, "디지털기기", 2000, "판매중", false);
 
         assertEquals("제목", post.title());
         assertEquals("내용", post.content());
@@ -21,14 +21,14 @@ class PostTest {
 
     @Test
     void toCsvRow() {
-        Post post = new Post(1,"제목", "내용", "토끼", 1, "디지털기기", 2000, false);
+        Post post = new Post(1, "제목", "내용", "토끼", 1, "디지털기기", 2000, "판매중", false);
 
-        assertEquals("1,제목,내용,토끼,1,디지털기기,2000,false", post.toCsvRow());
+        assertEquals("1,제목,내용,토끼,1,디지털기기,2000,판매중,false", post.toCsvRow());
     }
 
     @Test
     void change() {
-        Post post = new Post(1,"제목", "내용", "토끼", 1, "디지털기기", 2000, false);
+        Post post = new Post(1, "제목", "내용", "토끼", 1, "디지털기기", 2000, "판매중", false);
 
         post.change("제목2", "내용2", "가구", 1000);
 
@@ -36,5 +36,14 @@ class PostTest {
         assertEquals("내용2", post.content());
         assertEquals("가구", post.category());
         assertEquals(1000, post.secondHandItemPrice());
+    }
+
+    @Test
+    void completeTransaction() {
+        Post post = new Post(1, "제목", "내용", "토끼", 1, "디지털기기", 2000, "판매중", false);
+
+        post.completeTransaction();
+
+        assertEquals("거래완료", post.transactionStatus());
     }
 }
