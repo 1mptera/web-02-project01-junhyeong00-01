@@ -39,8 +39,9 @@ public class PostLoader {
 
         long id = Long.parseLong(words[0]);
         long sellerId = Long.parseLong(words[4]);
-        boolean deleted = Boolean.parseBoolean(words[6]);
-        return new Post(id, words[1], words[2], words[3], sellerId, words[5], deleted);
+        long  secondHandItemPrice = Long.parseLong(words[6]);
+        boolean deleted = Boolean.parseBoolean(words[7]);
+        return new Post(id, words[1], words[2], words[3], sellerId, words[5], secondHandItemPrice, deleted);
     }
 
     public void savePosts(List<Post> posts) throws IOException {

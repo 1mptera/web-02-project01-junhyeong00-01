@@ -1,6 +1,7 @@
 package panels;
 
 import models.Post;
+import models.SecondHandItem;
 import models.Seller;
 import utils.PostLoader;
 
@@ -22,6 +23,7 @@ public class PostWritePanel extends JPanel {
 
     private JTextField postTitleInputField;
     private JTextArea postContentInputTextArea;
+    private JTextField priceInputField;
 
     public PostWritePanel(List<Post> posts, Seller seller) {
         this.posts = posts;
@@ -35,11 +37,10 @@ public class PostWritePanel extends JPanel {
         panel.add(postTitleInputField());
 
         panel.add(new JLabel("- 카테고리 선택"));
-        String[] words = {"디지털기기", "생활가전", "가구", "주방", "의류", "게임", "도서", "스포츠", "기타"};
-        comboBox = new JComboBox(words);
+        comboBox = new JComboBox(SecondHandItem.CATEGORY);
         panel.add(comboBox);
-        panel.add(new JLabel("- 가격"));
-        panel.add(new JTextField(20));
+        panel.add(priceLabel());
+        panel.add(priceInputField());
 
         panel.add(postContentLabel());
 
@@ -63,6 +64,15 @@ public class PostWritePanel extends JPanel {
         return postTitleInputField;
     }
 
+    private JLabel priceLabel() {
+        return new JLabel("- 가격");
+    }
+
+    private JTextField priceInputField() {
+        priceInputField = new JTextField(20);
+        return priceInputField;
+    }
+
     private JLabel postContentLabel() {
         return new JLabel("- 내용:");
     }
@@ -82,8 +92,11 @@ public class PostWritePanel extends JPanel {
             String category = String.valueOf(comboBox.getSelectedItem());
             long id = posts.size() + 1;
             long sellerId = seller.userId();
+            long price = Long.parseLong(priceInputField.getText());
 
-            Post post = new Post(id, postTitle, postContent, sellerName, sellerId, category, false);
+            SecondHandItem secondHandItem = new SecondHandItem(price, category);
+            Post post = new Post(id, postTitle, postContent,
+                    sellerName, sellerId, secondHandItem.category(), secondHandItem.price(), false);
             posts.add(post);
 
             PostLoader postLoader = new PostLoader();

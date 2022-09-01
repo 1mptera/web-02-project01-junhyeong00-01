@@ -1,21 +1,27 @@
 package models;
 
 public class Post {
+    public static final String SELLER_NICKNAME = "판매자";
+    public static final String TITLE = "제목";
+    public static final String CONTENT = "내용";
+
     private long id;
     private String title;
     private String content;
     private String sellerNickname;
     private long sellerId;
     private String category;
+    private long secondHandItemPrice;
     private boolean deleted;
 
-    public Post(long id, String title, String content, String sellerNickname, long sellerId, String category, boolean deleted) {
+    public Post(long id, String title, String content, String sellerNickname, long sellerId, String category, long secondHandItemPrice, boolean deleted) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.sellerNickname = sellerNickname;
         this.sellerId = sellerId;
         this.category = category;
+        this.secondHandItemPrice = secondHandItemPrice;
         this.deleted = deleted;
     }
 
@@ -28,9 +34,14 @@ public class Post {
     }
 
     public String toCsvRow() {
-        return id + "," + title + "," + content
-                + "," + sellerNickname + "," + sellerId
-                + "," + category + "," + deleted;
+        return id + "," +
+                title + "," +
+                content + "," +
+                sellerNickname + "," +
+                sellerId + "," +
+                category + "," +
+                secondHandItemPrice + "," +
+                deleted;
     }
 
     @Override
@@ -54,10 +65,11 @@ public class Post {
         return category;
     }
 
-    public void change(String postTitle, String postContent, String category) {
+    public void change(String postTitle, String postContent, String category, long secondHandItemPrice) {
         this.title = postTitle;
         this.content = postContent;
         this.category = category;
+        this.secondHandItemPrice = secondHandItemPrice;
     }
 
     public boolean isDeleted() {
@@ -66,5 +78,9 @@ public class Post {
 
     public void delete() {
         deleted = true;
+    }
+
+    public long secondHandItemPrice() {
+        return secondHandItemPrice;
     }
 }
