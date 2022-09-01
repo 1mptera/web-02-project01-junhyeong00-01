@@ -1,6 +1,6 @@
 package models;
 
-public class User extends Account{
+public class User {
     private String userName;
     private String password;
     private String nickname;
@@ -23,7 +23,8 @@ public class User extends Account{
 
     @Override
     public String toString() {
-        return "userName: " + userName
+        return "id: "+ id
+                + ", userName: " + userName
                 + ", password: " + password
                 + ", nickname: " + nickname;
     }

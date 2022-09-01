@@ -12,9 +12,10 @@ public class Post {
     private long sellerId;
     private String category;
     private long secondHandItemPrice;
+    private String transactionStatus;
     private boolean deleted;
 
-    public Post(long id, String title, String content, String sellerNickname, long sellerId, String category, long secondHandItemPrice, boolean deleted) {
+    public Post(long id, String title, String content, String sellerNickname, long sellerId, String category, long secondHandItemPrice, String transactionStatus, boolean deleted) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -22,6 +23,7 @@ public class Post {
         this.sellerId = sellerId;
         this.category = category;
         this.secondHandItemPrice = secondHandItemPrice;
+        this.transactionStatus = transactionStatus;
         this.deleted = deleted;
     }
 
@@ -41,12 +43,21 @@ public class Post {
                 sellerId + "," +
                 category + "," +
                 secondHandItemPrice + "," +
+                transactionStatus + "," +
                 deleted;
     }
 
     @Override
     public String toString() {
-        return title + " - " + content;
+        return "id: " + id + ", title: " +
+                title + ", content: " +
+                content + ", sellerNickname: " +
+                sellerNickname + ", sellerId: " +
+                sellerId + ", category: " +
+                category + ", secondHandItemPrice: " +
+                secondHandItemPrice + ", transactionStatus: " +
+                transactionStatus + ", deleted: " +
+                deleted;
     }
 
     public long id() {
@@ -82,5 +93,13 @@ public class Post {
 
     public long secondHandItemPrice() {
         return secondHandItemPrice;
+    }
+
+    public void completeTransaction() {
+        transactionStatus = "거래완료";
+    }
+
+    public String transactionStatus() {
+        return transactionStatus;
     }
 }

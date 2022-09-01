@@ -1,9 +1,12 @@
 package frames;
 
+import models.Buyer;
 import models.Post;
 import models.Seller;
+import models.Transaction;
 import panels.PostEditPanel;
 import utils.PostLoader;
+import utils.TransactionLoader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,16 +18,22 @@ import java.io.IOException;
 import java.util.List;
 
 public class postFrame extends JFrame {
-    private final JPanel postPanel;
+    private final List<Transaction> transactions;
+    private final List<Post> posts;
+
     private Post post;
     private Seller seller;
-    private List<Post> posts;
+    private Buyer buyer;
+
+    private final JPanel postPanel;
     private JPanel editPanel;
 
-    public postFrame(Post post, Seller seller, List<Post> posts) {
+    public postFrame(Post post, Seller seller, List<Post> posts, Buyer buyer, List<Transaction> transactions) {
         this.post = post;
         this.seller = seller;
         this.posts = posts;
+        this.buyer = buyer;
+        this.transactions = transactions;
 
         this.setTitle(post.title());
         this.setSize(350, 550);
@@ -50,9 +59,13 @@ public class postFrame extends JFrame {
 
     private JPanel editPanel() {
         editPanel = new JPanel();
-        if (seller.userId() == post.sellerId()) {
+        if (seller.id() == post.sellerId()) {
             editPanel.add(editButton());
             editPanel.add(deleteButton());
+        }
+
+        if (seller.id() != post.sellerId() && !post.transactionStatus().equals("거래완료")) {
+            editPanel.add(transactionButton());
         }
         return editPanel;
     }
@@ -85,5 +98,28 @@ public class postFrame extends JFrame {
             dispose();
         });
         return button;
+    }
+
+    private JButton transactionButton() {
+        JButton button = new JButton("거래");
+        button.addActionListener(e -> {
+            long transactionId = transactions.size() + 1;
+            Transaction transaction = new Transaction(transactionId, post.id(), post.sellerId(), post.sellerNickname(), buyer.id(), buyer.nickname(), Transaction.TRADING);
+            transactions.add(transaction);
+
+            saveTransactions();
+
+            dispose();
+        });
+        return button;
+    }
+
+    private void saveTransactions() {
+        TransactionLoader transactionLoader = new TransactionLoader();
+        try {
+            transactionLoader.saveTransactions(transactions);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

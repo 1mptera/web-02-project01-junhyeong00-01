@@ -13,7 +13,7 @@ class PostLoaderTest {
     void loadPost() throws FileNotFoundException {
         PostLoader postLoader = new PostLoader();
 
-        List<Post> posts = postLoader.loadPost();
+        List<Post> posts = postLoader.loadPosts();
 
         assertNotNull(posts);
     }
@@ -22,8 +22,10 @@ class PostLoaderTest {
     void parsePost() {
         PostLoader postLoader = new PostLoader();
 
-        Post post = postLoader.parsePost("1,제목,내용,토끼,1,디지털기기,2000,false");
+        Post post = postLoader.parsePost("1,당근,팔아요,토끼,1,디지털기기,2000,판매중,false");
 
-        assertEquals("제목 - 내용", post.toString());
+        assertEquals("id: 1, title: 당근, content: 팔아요, sellerNickname: 토끼," +
+                " sellerId: 1, category: 디지털기기, secondHandItemPrice: 2000," +
+                " transactionStatus: 판매중, deleted: false", post.toString());
     }
 }
