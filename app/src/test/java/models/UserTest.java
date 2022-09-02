@@ -21,4 +21,13 @@ class UserTest {
 
         assertEquals("1,id,비번,토끼", user.toCsvRow());
     }
+
+    @Test
+    void editPassword() {
+        User user = new User("id", "비번", "토끼", 1);
+
+        user.editPassword("당근");
+
+        assertEquals("당근", user.password());
+    }
 }

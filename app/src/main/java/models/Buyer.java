@@ -1,6 +1,6 @@
 package models;
 
-public class Buyer {
+public class Buyer{
     private long id;
     private String nickname;
 

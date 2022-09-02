@@ -96,12 +96,7 @@ public class SignUpFrame extends JFrame {
                 User user = new User(userName, password, nickname, id);
                 users.add(user);
 
-                UserLoader userLoader = new UserLoader();
-                try {
-                    userLoader.saveUsers(users);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
+                saveUsers();
                 dispose();
             }
 
@@ -113,5 +108,14 @@ public class SignUpFrame extends JFrame {
             }
         });
         return button;
+    }
+
+    private void saveUsers() {
+        UserLoader userLoader = new UserLoader();
+        try {
+            userLoader.saveUsers(users);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
