@@ -7,6 +7,7 @@ import models.Transaction;
 import models.User;
 import panels.ImagePanel;
 import panels.LoginPanel;
+import panels.MyPagePanel;
 import panels.PostWritePanel;
 import panels.SearchPanel;
 import panels.TransactionsPanel;
@@ -83,6 +84,7 @@ public class SecondHandMarket {
         menuPanel.add(searchButton());
         menuPanel.add(postWriteButton());
         menuPanel.add(transactionListButton());
+        menuPanel.add(myPageButton());
         menuPanel.add(logoutButton());
 
         imagePanel.add(menuPanel, BorderLayout.PAGE_START);
@@ -135,6 +137,19 @@ public class SecondHandMarket {
                 JPanel transactionListPanel = new TransactionsPanel(posts, seller, buyer, transactions);
 
                 showContentPanel(transactionListPanel);
+            }
+        });
+        return button;
+    }
+
+    private JButton myPageButton() {
+        JButton button = new JButton("마이페이지");
+        button.setPreferredSize(new Dimension(130, 45));
+        button.addActionListener(e -> {
+            if (seller.id() != -1) {
+                JPanel myPagePanel = new MyPagePanel(posts, seller, buyer, transactions, users);
+
+                showContentPanel(myPagePanel);
             }
         });
         return button;

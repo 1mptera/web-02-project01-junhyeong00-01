@@ -40,4 +40,8 @@ public class User {
     public long id() {
         return id;
     }
+
+    public void editPassword(String password) {
+        this.password = password;
+    }
 }

@@ -111,7 +111,8 @@ public class PostWritePanel extends JPanel {
             long sellerId = seller.id();
             long price = Long.parseLong(priceInputField.getText());
 
-            if (!category.equals(SecondHandItem.CATEGORY[0])) {
+            if (!category.equals(SecondHandItem.CATEGORY[0]) && postTitle.length() != 0
+                    && postContent.length() != 0) {
                 SecondHandItem secondHandItem = new SecondHandItem(price, category);
                 Post post = new Post(id, postTitle, postContent,
                         sellerName, sellerId, secondHandItem.category(), secondHandItem.price(), Transaction.FOR_SALE, false);
