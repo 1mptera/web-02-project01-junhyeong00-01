@@ -1,11 +1,10 @@
 package models;
 
-public class Seller{
+public class CurrentAccount {
     private long id;
     private String nickname;
 
-    public Seller(long userId, String userNickname) {
-
+    public CurrentAccount(long userId, String userNickname) {
         this.id = userId;
         this.nickname = userNickname;
     }

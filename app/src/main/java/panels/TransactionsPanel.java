@@ -1,11 +1,9 @@
 package panels;
 
-import models.Buyer;
 import models.Post;
-import models.Seller;
+import models.CurrentAccount;
 import models.Transaction;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
@@ -15,7 +13,8 @@ import java.awt.GridLayout;
 import java.util.List;
 
 public class TransactionsPanel extends JPanel {
-    public TransactionsPanel(List<Post> posts, Seller seller, Buyer buyer, List<Transaction> transactions) {
+    public TransactionsPanel(List<Post> posts, CurrentAccount currentAccount,
+                             List<Transaction> transactions) {
         JPanel panel = new JPanel();
 
         panel.setLayout(new GridLayout(transactions.size() + 1, 1, 5, 5));
@@ -29,11 +28,13 @@ public class TransactionsPanel extends JPanel {
                     continue;
                 }
 
-                if (transaction.sellerId() != seller.id() && transaction.buyerId() != buyer.id()) {
+                if (transaction.sellerId() != currentAccount.id()
+                        && transaction.buyerId() != currentAccount.id()) {
                     continue;
                 }
 
-                JPanel transactionPanel = new TransactionPanel(post, posts, seller, buyer, transactions, transaction);
+                JPanel transactionPanel = new TransactionPanel(
+                        post, posts, currentAccount, transactions, transaction);
                 panel.add(transactionPanel);
             }
         }

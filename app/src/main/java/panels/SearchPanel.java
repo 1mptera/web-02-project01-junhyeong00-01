@@ -1,9 +1,8 @@
 package panels;
 
-import models.Buyer;
 import models.Post;
 import models.SecondHandItem;
-import models.Seller;
+import models.CurrentAccount;
 import models.Transaction;
 
 import javax.swing.JButton;
@@ -14,7 +13,6 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
@@ -23,8 +21,7 @@ public class SearchPanel extends JPanel {
     private final List<Post> posts;
     private final List<Transaction> transactions;
 
-    private Seller seller;
-    private Buyer buyer;
+    private CurrentAccount currentAccount;
 
     private JPanel searchPanel;
     private JTextField searchField;
@@ -33,10 +30,9 @@ public class SearchPanel extends JPanel {
     private JComboBox transactionStatusComboBox;
     private JPanel postsPanel;
 
-    public SearchPanel(List<Post> posts, Seller seller, Buyer buyer, List<Transaction> transactions) {
+    public SearchPanel(List<Post> posts, CurrentAccount currentAccount, List<Transaction> transactions) {
         this.posts = posts;
-        this.seller = seller;
-        this.buyer = buyer;
+        this.currentAccount = currentAccount;
         this.transactions = transactions;
 
         setOpaque(false);
@@ -119,7 +115,7 @@ public class SearchPanel extends JPanel {
                     continue;
                 }
 
-                JPanel postPanel = new PostPanel(post, posts, seller, buyer, transactions);
+                JPanel postPanel = new PostPanel(post, posts, currentAccount, transactions);
                 postsPanel.add(postPanel);
             }
 

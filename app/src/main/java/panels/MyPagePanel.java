@@ -1,8 +1,7 @@
 package panels;
 
-import models.Buyer;
 import models.Post;
-import models.Seller;
+import models.CurrentAccount;
 import models.Transaction;
 import models.User;
 import utils.UserLoader;
@@ -20,14 +19,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class MyPagePanel extends JPanel {
-    private Seller seller;
+    private CurrentAccount currentAccount;
     private List<User> users;
 
     private JPanel passwordEditPanel;
     private JTextField passwordInputField;
 
-    public MyPagePanel(List<Post> posts, Seller seller, Buyer buyer, List<Transaction> transactions, List<User> users) {
-        this.seller = seller;
+    public MyPagePanel(List<Post> posts, CurrentAccount currentAccount,
+                       List<Transaction> transactions, List<User> users) {
+        this.currentAccount = currentAccount;
         this.users = users;
 
         setLayout(new BorderLayout());
@@ -50,11 +50,11 @@ public class MyPagePanel extends JPanel {
                 continue;
             }
 
-            if (post.sellerId() != seller.id()) {
+            if (post.sellerId() != currentAccount.id()) {
                 continue;
             }
 
-            JPanel postPanel = new PostPanel(post, posts, seller, buyer, transactions);
+            JPanel postPanel = new PostPanel(post, posts, currentAccount, transactions);
             postsPanel.add(postPanel);
         }
 
@@ -70,7 +70,7 @@ public class MyPagePanel extends JPanel {
         panel.setPreferredSize(new Dimension(170, 160));
 
         panel.add(new JLabel(" - 계정 정보 -"));
-        panel.add(new JLabel("  닉네임: " + seller.nickname()));
+        panel.add(new JLabel("  닉네임: " + currentAccount.nickname()));
         panel.add(passwordEditButton());
         panel.add(new JLabel("- 작성한 글 목록"));
         return panel;
@@ -97,7 +97,7 @@ public class MyPagePanel extends JPanel {
             passwordEditPanel.add(passwordInputField());
 
             for (User user : users){
-                if (user.id() == seller.id()) {
+                if (user.id() == currentAccount.id()) {
                     passwordEditPanel.add(editButton(user));
                 }
             }

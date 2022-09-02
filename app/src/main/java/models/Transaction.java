@@ -13,7 +13,8 @@ public class Transaction {
     private String buyerNickname;
     private String status;
 
-    public Transaction(long id, long postId, long sellerId, String sellerNickname, long buyerId, String buyerNickname, String status) {
+    public Transaction(long id, long postId, long sellerId, String sellerNickname,
+                       long buyerId, String buyerNickname, String status) {
         this.id = id;
         this.postId = postId;
         this.sellerId = sellerId;
