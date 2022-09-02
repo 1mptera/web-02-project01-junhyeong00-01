@@ -1,8 +1,7 @@
 package panels;
 
-import models.Buyer;
 import models.Post;
-import models.Seller;
+import models.CurrentAccount;
 import models.Transaction;
 
 import javax.swing.JLabel;
@@ -14,7 +13,7 @@ import java.awt.GridLayout;
 import java.util.List;
 
 public class postsPanel extends JPanel {
-    public postsPanel(List<Post> posts, Seller seller, Buyer buyer, List<Transaction> transactions) {
+    public postsPanel(List<Post> posts, CurrentAccount currentAccount, List<Transaction> transactions) {
         JPanel panel = new JPanel();
 
         panel.setLayout(new GridLayout(posts.size() + 1, 1, 5, 5));
@@ -26,7 +25,7 @@ public class postsPanel extends JPanel {
                 continue;
             }
 
-            JPanel postPanel = new PostPanel(post, posts, seller, buyer, transactions);
+            JPanel postPanel = new PostPanel(post, posts, currentAccount, transactions);
             panel.add(postPanel);
         }
 

@@ -1,9 +1,8 @@
 package panels;
 
 import frames.postFrame;
-import models.Buyer;
 import models.Post;
-import models.Seller;
+import models.CurrentAccount;
 import models.Transaction;
 
 import javax.swing.JFrame;
@@ -19,7 +18,7 @@ import java.util.List;
 public class PostPanel extends JPanel {
     private final Post post;
 
-    public PostPanel(Post post, List<Post> posts, Seller seller, Buyer buyer, List<Transaction> transactions) {
+    public PostPanel(Post post, List<Post> posts, CurrentAccount currentAccount, List<Transaction> transactions) {
         this.post = post;
 
         setBorder(new LineBorder(Color.GRAY, 1, true));
@@ -28,7 +27,7 @@ public class PostPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JFrame postFrame = new postFrame(post, seller, posts, buyer, transactions);
+                JFrame postFrame = new postFrame(post, currentAccount, posts, transactions);
             }
         });
 

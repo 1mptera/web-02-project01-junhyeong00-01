@@ -1,9 +1,8 @@
 package panels;
 
 import frames.postFrame;
-import models.Buyer;
 import models.Post;
-import models.Seller;
+import models.CurrentAccount;
 import models.Transaction;
 import utils.PostLoader;
 import utils.TransactionLoader;
@@ -25,14 +24,14 @@ public class TransactionPanel extends JPanel {
     private final List<Transaction> transactions;
 
     private Post post;
-    private Seller seller;
+    private CurrentAccount currentAccount;
     private Transaction transaction;
 
-    public TransactionPanel(Post post, List<Post> posts, Seller seller,
-                            Buyer buyer, List<Transaction> transactions, Transaction transaction) {
+    public TransactionPanel(Post post, List<Post> posts, CurrentAccount currentAccount,
+                             List<Transaction> transactions, Transaction transaction) {
         this.post = post;
         this.posts = posts;
-        this.seller = seller;
+        this.currentAccount = currentAccount;
         this.transactions = transactions;
         this.transaction = transaction;
 
@@ -42,11 +41,11 @@ public class TransactionPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JFrame postFrame = new postFrame(post, seller, posts, buyer, transactions);
+                JFrame postFrame = new postFrame(post, currentAccount, posts, transactions);
             }
         });
 
-        if (seller.id() == transaction.sellerId()) {
+        if (currentAccount.id() == transaction.sellerId()) {
             add(sellLabel());
             add(categoryLabel());
             add(postTitleLabel());
@@ -54,7 +53,7 @@ public class TransactionPanel extends JPanel {
             add(transactionCompleteButton());
         }
 
-        if (buyer.id() == transaction.buyerId()) {
+        if (currentAccount.id() == transaction.buyerId()) {
             add(buyLabel());
             add(categoryLabel());
             add(postTitleLabel());
@@ -103,8 +102,8 @@ public class TransactionPanel extends JPanel {
         JButton button = new JButton(transaction.isStatus());
         button.setPreferredSize(new Dimension(70, 20));
         button.addActionListener(e -> {
-            if (seller.id() == transaction.sellerId()) {
-                seller.complete(transaction);
+            if (currentAccount.id() == transaction.sellerId()) {
+                currentAccount.complete(transaction);
 
                 transaction.updateStatus(post);
 

@@ -2,7 +2,7 @@ package panels;
 
 import models.Post;
 import models.SecondHandItem;
-import models.Seller;
+import models.CurrentAccount;
 import models.Transaction;
 import utils.PostLoader;
 
@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.GridLayout;
 import java.io.IOException;
 import java.util.List;
@@ -21,16 +20,16 @@ import java.util.List;
 public class PostWritePanel extends JPanel {
     private final List<Post> posts;
 
-    private Seller seller;
+    private CurrentAccount currentAccount;
 
     private JComboBox comboBox;
     private JTextField postTitleInputField;
     private JTextArea postContentInputTextArea;
     private JTextField priceInputField;
 
-    public PostWritePanel(List<Post> posts, Seller seller) {
+    public PostWritePanel(List<Post> posts, CurrentAccount currentAccount) {
         this.posts = posts;
-        this.seller = seller;
+        this.currentAccount = currentAccount;
 
         setLayout(new BorderLayout());
 
@@ -105,10 +104,10 @@ public class PostWritePanel extends JPanel {
         button.addActionListener(e -> {
             String postTitle = postTitleInputField.getText();
             String postContent = postContentInputTextArea.getText();
-            String sellerName = seller.nickname();
+            String sellerName = currentAccount.nickname();
             String category = String.valueOf(comboBox.getSelectedItem());
             long id = posts.size() + 1;
-            long sellerId = seller.id();
+            long sellerId = currentAccount.id();
             long price = Long.parseLong(priceInputField.getText());
 
             if (!category.equals(SecondHandItem.CATEGORY[0]) && postTitle.length() != 0

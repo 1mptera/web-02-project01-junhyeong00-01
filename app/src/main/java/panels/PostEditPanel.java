@@ -2,7 +2,7 @@ package panels;
 
 import models.Post;
 import models.SecondHandItem;
-import models.Seller;
+import models.CurrentAccount;
 import utils.PostLoader;
 
 import javax.swing.JButton;
@@ -20,16 +20,16 @@ public class PostEditPanel extends JPanel {
     private final List<Post> posts;
     
     private final Post post;
-    private final Seller seller;
+    private final CurrentAccount currentAccount;
     
     private JComboBox comboBox;
     private JTextField postTitleInputField;
     private JTextArea postContentInputTextArea;
     private JTextField priceInputField;
 
-    public PostEditPanel(Post post, Seller seller, List<Post> posts) {
+    public PostEditPanel(Post post, CurrentAccount currentAccount, List<Post> posts) {
         this.post = post;
-        this.seller = seller;
+        this.currentAccount = currentAccount;
         this.posts = posts;
 
         setLayout(new BorderLayout());
@@ -113,7 +113,7 @@ public class PostEditPanel extends JPanel {
             String category = String.valueOf(comboBox.getSelectedItem());
             long secondHandItemPrice = Long.parseLong(priceInputField.getText());
 
-            seller.edit(post, postTitle, postContent, category, secondHandItemPrice);
+            currentAccount.edit(post, postTitle, postContent, category, secondHandItemPrice);
 
             savePosts();
         });

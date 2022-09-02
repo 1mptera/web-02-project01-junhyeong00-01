@@ -1,8 +1,7 @@
 package panels;
 
 import frames.SignUpFrame;
-import models.Buyer;
-import models.Seller;
+import models.CurrentAccount;
 import models.User;
 
 import javax.swing.JButton;
@@ -18,17 +17,15 @@ import java.util.List;
 public class LoginPanel extends JPanel {
     private final List<User> users;
 
-    private Seller seller;
-    private Buyer buyer;
+    private CurrentAccount currentAccount;
 
     private JPanel loginPanel;
     private JTextField userNameInputField;
     private JTextField passwordInputField;
 
-    public LoginPanel(List<User> users, Seller seller, Buyer buyer) {
+    public LoginPanel(List<User> users, CurrentAccount currentAccount) {
         this.users = users;
-        this.seller = seller;
-        this.buyer = buyer;
+        this.currentAccount = currentAccount;
 
         setOpaque(false);
 
@@ -99,8 +96,7 @@ public class LoginPanel extends JPanel {
             if (!(userName.length() == 0) && !(password.length() == 0)) {
                 for (User user : users) {
                     if (userName.equals(user.userName()) && password.equals(user.password())) {
-                        seller.login( user.id(), user.nickname());
-                        buyer.login( user.id(), user.nickname());
+                        currentAccount.login( user.id(), user.nickname());
                         this.removeAll();
                         this.add(new JLabel("환영합니다. " + user.nickname() + "님"));
 

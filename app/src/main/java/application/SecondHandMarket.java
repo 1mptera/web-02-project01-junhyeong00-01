@@ -1,8 +1,7 @@
 package application;
 
-import models.Buyer;
 import models.Post;
-import models.Seller;
+import models.CurrentAccount;
 import models.Transaction;
 import models.User;
 import panels.ImagePanel;
@@ -35,8 +34,7 @@ public class SecondHandMarket {
     private ImagePanel imagePanel;
     private JPanel menuPanel;
 
-    private Seller seller = new Seller(-1, "");
-    private Buyer buyer = new Buyer(-1, "");
+    private CurrentAccount currentAccount = new CurrentAccount(-1, "");
 
     public static void main(String[] args) throws FileNotFoundException {
         SecondHandMarket application = new SecondHandMarket();
@@ -94,8 +92,8 @@ public class SecondHandMarket {
         JButton button = new JButton("홈");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            if (seller.id() != -1) {
-                JPanel postPanel = new postsPanel(posts, seller, buyer, transactions);
+            if (currentAccount.id() != -1) {
+                JPanel postPanel = new postsPanel(posts, currentAccount, transactions);
 
                 showContentPanel(postPanel);
             }
@@ -107,8 +105,8 @@ public class SecondHandMarket {
         JButton button = new JButton("검색");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            if (seller.id() != -1) {
-                JPanel searchPanel = new SearchPanel(posts, seller, buyer, transactions);
+            if (currentAccount.id() != -1) {
+                JPanel searchPanel = new SearchPanel(posts, currentAccount, transactions);
 
                 showContentPanel(searchPanel);
             }
@@ -120,8 +118,8 @@ public class SecondHandMarket {
         JButton button = new JButton("판매 글 등록");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            if (seller.id() != -1) {
-                JPanel postWritePanel = new PostWritePanel(posts, seller);
+            if (currentAccount.id() != -1) {
+                JPanel postWritePanel = new PostWritePanel(posts, currentAccount);
 
                 showContentPanel(postWritePanel);
             }
@@ -133,8 +131,8 @@ public class SecondHandMarket {
         JButton button = new JButton("내 거래 목록");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            if (seller.id() != -1) {
-                JPanel transactionListPanel = new TransactionsPanel(posts, seller, buyer, transactions);
+            if (currentAccount.id() != -1) {
+                JPanel transactionListPanel = new TransactionsPanel(posts, currentAccount, transactions);
 
                 showContentPanel(transactionListPanel);
             }
@@ -146,8 +144,8 @@ public class SecondHandMarket {
         JButton button = new JButton("마이페이지");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            if (seller.id() != -1) {
-                JPanel myPagePanel = new MyPagePanel(posts, seller, buyer, transactions, users);
+            if (currentAccount.id() != -1) {
+                JPanel myPagePanel = new MyPagePanel(posts, currentAccount, transactions, users);
 
                 showContentPanel(myPagePanel);
             }
@@ -159,9 +157,8 @@ public class SecondHandMarket {
         JButton button = new JButton("로그아웃");
         button.setPreferredSize(new Dimension(130, 45));
         button.addActionListener(e -> {
-            seller.logout();
-            buyer.logout();
-            loginPanel = new LoginPanel(users, seller, buyer);
+            currentAccount.logout();
+            loginPanel = new LoginPanel(users, currentAccount);
 
             showContentPanel(loginPanel);
         });
@@ -172,7 +169,7 @@ public class SecondHandMarket {
         contentPanel = new JPanel();
         contentPanel.setOpaque(false);
 
-        loginPanel = new LoginPanel(users, seller, buyer);
+        loginPanel = new LoginPanel(users, currentAccount);
         showContentPanel(loginPanel);
 
         imagePanel.add(contentPanel);
