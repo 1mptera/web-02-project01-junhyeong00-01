@@ -15,7 +15,8 @@ public class Post {
     private String transactionStatus;
     private boolean deleted;
 
-    public Post(long id, String title, String content, String sellerNickname, long sellerId, String category, long secondHandItemPrice, String transactionStatus, boolean deleted) {
+    public Post(long id, String title, String content, String sellerNickname, long sellerId,
+                String category, long secondHandItemPrice, String transactionStatus, boolean deleted) {
         this.id = id;
         this.title = title;
         this.content = content;

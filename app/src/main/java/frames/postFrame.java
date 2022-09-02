@@ -23,7 +23,7 @@ public class postFrame extends JFrame {
     private Post post;
     private CurrentAccount currentAccount;
 
-    private final JPanel postPanel;
+    private JPanel postPanel;
     private JPanel editPanel;
 
     public postFrame(Post post, CurrentAccount currentAccount, List<Post> posts, List<Transaction> transactions) {
@@ -38,20 +38,26 @@ public class postFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setVisible(true);
 
+        add(postPanel(), BorderLayout.NORTH);
+        add(postContentPanel());
+        add(editPanel(), BorderLayout.SOUTH);
+    }
+
+    private JPanel postPanel() {
         postPanel = new JPanel();
         postPanel.setLayout(new GridLayout(4, 1, 10, 10));
-        add(postPanel, BorderLayout.NORTH);
 
         postPanel.add(new JLabel("작성자: " + post.sellerNickname()));
         postPanel.add(new JLabel("카테고리: " + post.category()));
         postPanel.add(new JLabel("가격: " + post.secondHandItemPrice() + "원"));
         postPanel.add(new JLabel(""));
+        return postPanel;
+    }
 
-        JPanel panel1 = new JPanel();
-        add(panel1);
-        panel1.add(new JLabel(post.content()));
-
-        add(editPanel(), BorderLayout.SOUTH);
+    private JPanel postContentPanel() {
+        JPanel panel = new JPanel();
+        panel.add(new JLabel(post.content()));
+        return panel;
     }
 
     private JPanel editPanel() {
@@ -86,12 +92,9 @@ public class postFrame extends JFrame {
         JButton button = new JButton("삭제");
         button.addActionListener(e -> {
             post.delete();
-            PostLoader postLoader = new PostLoader();
-            try {
-                postLoader.savePosts(posts);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+
+            savePosts();
+
             dispose();
         });
         return button;
@@ -101,7 +104,8 @@ public class postFrame extends JFrame {
         JButton button = new JButton("거래");
         button.addActionListener(e -> {
             long transactionId = transactions.size() + 1;
-            Transaction transaction = new Transaction(transactionId, post.id(), post.sellerId(), post.sellerNickname(), currentAccount.id(), currentAccount.nickname(), Transaction.TRADING);
+            Transaction transaction = new Transaction(transactionId, post.id(), post.sellerId(),
+                    post.sellerNickname(), currentAccount.id(), currentAccount.nickname(), Transaction.TRADING);
             transactions.add(transaction);
 
             saveTransactions();
@@ -109,6 +113,15 @@ public class postFrame extends JFrame {
             dispose();
         });
         return button;
+    }
+
+    private void savePosts() {
+        PostLoader postLoader = new PostLoader();
+        try {
+            postLoader.savePosts(posts);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     private void saveTransactions() {

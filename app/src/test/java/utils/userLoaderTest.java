@@ -1,6 +1,5 @@
 package utils;
 
-import models.Post;
 import models.User;
 import org.junit.jupiter.api.Test;
 

@@ -13,7 +13,8 @@ import java.awt.GridLayout;
 import java.util.List;
 
 public class TransactionsPanel extends JPanel {
-    public TransactionsPanel(List<Post> posts, CurrentAccount currentAccount, List<Transaction> transactions) {
+    public TransactionsPanel(List<Post> posts, CurrentAccount currentAccount,
+                             List<Transaction> transactions) {
         JPanel panel = new JPanel();
 
         panel.setLayout(new GridLayout(transactions.size() + 1, 1, 5, 5));
@@ -27,11 +28,13 @@ public class TransactionsPanel extends JPanel {
                     continue;
                 }
 
-                if (transaction.sellerId() != currentAccount.id() && transaction.buyerId() != currentAccount.id()) {
+                if (transaction.sellerId() != currentAccount.id()
+                        && transaction.buyerId() != currentAccount.id()) {
                     continue;
                 }
 
-                JPanel transactionPanel = new TransactionPanel(post, posts, currentAccount, transactions, transaction);
+                JPanel transactionPanel = new TransactionPanel(
+                        post, posts, currentAccount, transactions, transaction);
                 panel.add(transactionPanel);
             }
         }

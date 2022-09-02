@@ -25,7 +25,8 @@ public class MyPagePanel extends JPanel {
     private JPanel passwordEditPanel;
     private JTextField passwordInputField;
 
-    public MyPagePanel(List<Post> posts, CurrentAccount currentAccount, List<Transaction> transactions, List<User> users) {
+    public MyPagePanel(List<Post> posts, CurrentAccount currentAccount,
+                       List<Transaction> transactions, List<User> users) {
         this.currentAccount = currentAccount;
         this.users = users;
 

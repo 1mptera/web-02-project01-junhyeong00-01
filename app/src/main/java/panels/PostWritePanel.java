@@ -114,7 +114,8 @@ public class PostWritePanel extends JPanel {
                     && postContent.length() != 0) {
                 SecondHandItem secondHandItem = new SecondHandItem(price, category);
                 Post post = new Post(id, postTitle, postContent,
-                        sellerName, sellerId, secondHandItem.category(), secondHandItem.price(), Transaction.FOR_SALE, false);
+                        sellerName, sellerId, secondHandItem.category(),
+                        secondHandItem.price(), Transaction.FOR_SALE, false);
                 posts.add(post);
 
                 savePosts();

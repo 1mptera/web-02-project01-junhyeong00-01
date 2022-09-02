@@ -18,7 +18,8 @@ import java.util.List;
 public class PostPanel extends JPanel {
     private final Post post;
 
-    public PostPanel(Post post, List<Post> posts, CurrentAccount currentAccount, List<Transaction> transactions) {
+    public PostPanel(Post post, List<Post> posts, CurrentAccount currentAccount,
+                     List<Transaction> transactions) {
         this.post = post;
 
         setBorder(new LineBorder(Color.GRAY, 1, true));
