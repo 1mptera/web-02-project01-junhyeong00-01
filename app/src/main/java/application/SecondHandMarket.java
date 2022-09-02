@@ -65,7 +65,7 @@ public class SecondHandMarket {
     }
 
     public void initFrame() {
-        frame = new JFrame("우리 마켓");
+        frame = new JFrame("당근이 마켓");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1000, 700);
         frame.setLocation(200, 100);
